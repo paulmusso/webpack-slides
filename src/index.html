@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Webpack slides</title>
+	<script src="bundle.js"></script>
+</head>
+<body>
+<div class="reveal">
+	<!-- Wrap all slides in a single "slides" class -->
+	<div class="slides">
+
+		<!-- ALL SLIDES GO HERE -->
+		<!-- Each section element contains an individual slide -->
+		<section class="left">
+			<div class="webpack-logo"></div>
+			<h1>Webpack</h1>
+			<p>Packager votre application web</p>
+			<p class="author">Paul Musso <a href="https://twitter.com/paulmuss0">@paulmuss0</a></p>
+		</section>
+
+		<section>
+			<section>
+				<h2>Vous voulez</h2>				
+			</section>
+			<section>					
+				<p>Utiliser des préprocesseurs CSS</p> 
+				<p>Des langages comme le Coffee Script, Typescript, Elm ou de l’ES 2015</p>
+			</section>
+			<section>
+				<p>
+					Optimiser votre code pour la production
+					<ul>
+						<li>réduire le poids</li>
+						<li>réduire le nombre de requête</li>
+					</ul>
+				</p>
+			</section>
+			<section>
+				<p>Obfusquer votre code</p>
+			</section>
+		</section>
+		<section>
+			<section>
+				<h2>Webpack</h2>
+				<p>C'est quoi ?</p>				
+			</section>
+			<section>
+				<p>C'est un outil sous forme de CLI ou de librairie Node</p>
+				<pre><code>
+# Installation
+
+npm install -g webpack
+				</code></pre>
+			</section>
+			<section>
+				<ul>
+					<li>Package le javascript et les ressources de son écosystème</li>
+					<li>Prend en entrée des ressources qu’il réduit en nombre en sortie</li>
+				</ul>
+				<div class="what-is-webpack"></div>
+			</section>
+			<section>
+				<strong>Webpack</strong>  divise l’application en plusieurs paquets qui peuvent être chargés à la demande
+			</section>
+			<section>
+				<pre><code style="max-height:600px">
+webpack --display-modules --display-reasons
+
+Hash: f6863289b3896e84236b
+Version: webpack 1.12.9
+Time: 9029ms
+      Asset       Size  Chunks             Chunk Names
+ index.html  158 bytes          [emitted]
+  bundle.js    88.5 kB       0  [emitted]  main
+1.bundle.js    61.7 kB       1  [emitted]
+   [0] multi main 40 bytes {0} [built]
+   [1] ./index.html 56 bytes {0} [built]
+       single entry ./index.html [0] multi main
+   [2] ./index.js 399 bytes {0} [built]
+       single entry ./index [0] multi main
+   [3] ./~/jquery/dist/jquery.js 213 kB {0} [built]
+       cjs require jquery [2] ./index.js 3:14-31
+   [4] (webpack)/buildin/module.js 244 bytes {0} [built]
+       cjs require module [3] ./~/jquery/dist/jquery.js 1:0-105
+       cjs require module [6] ./~/lodash/lodash.js 1:0-102
+   [5] ./hello.js 261 bytes {1} [built]
+       require.ensure item ./hello [2] ./index.js 9:0-14:2
+       cjs require ./hello [2] ./index.js 10:13-31
+   [6] ./~/lodash/lodash.js 412 kB {1} [built]
+       cjs require lodash [5] ./hello.js 3:14-31
+				</code></pre>
+			</section>
+			<section>
+				<h3>Pipeline de <strong>loaders</strong> pour les ressources</h3>
+				<p>
+					Principaux <a href="https://webpack.github.io/docs/list-of-loaders.html">loaders</a>
+					<ul>
+						<li><strong>Packaging: </strong>
+							<a href="https://github.com/webpack/file-loader">file</a>, 
+							<a href="https://github.com/webpack/url-loader">url</a>, 
+							<a href="https://github.com/webpack/imports-loader">imports</a>, 
+							<a href="https://github.com/webpack/exports-loader">exports</a>,
+							<a href="https://github.com/tcoopman/image-webpack-loader">image</a>, 
+							<a href="https://github.com/thetalecrafter/img-loader">img</a>
+						</li>
+						<li><strong>Langages: </strong>
+							<a href="https://github.com/webpack/coffee-loader">coffee</a>, 
+							<a href="https://github.com/babel/babel-loader">babel</a>, 
+							<a href="https://github.com/rtfeldman/elm-webpack-loader">elm</a>, 
+							<a href="https://github.com/TypeStrong/ts-loader">ts</a>
+						</li>
+						<li>
+							<strong>Styles: </strong>
+							<a href="https://github.com/webpack/style-loader">style</a>,
+							<a href="https://github.com/webpack/css-loader">css</a>,
+							<a href="https://github.com/webpack/less-loader">less</a>,
+							<a href="https://github.com/jtangelder/sass-loader">sass</a>,
+							<a href="https://github.com/postcss/postcss-loader">postcss</a>
+						</li>
+						<li>
+							<strong>Support: </strong>
+							<a href="https://github.com/webpack/mocha-loader">mocha</a>
+							<a href="https://github.com/MoOx/eslint-loader">eslint</a>
+							<a href="https://github.com/hyungjs/csslint-loader">csslint</a>
+							<a href="https://github.com/deepsweet/isparta-loader">isparta</a>
+						</li>
+					</ul>
+				</p>
+			</section>
+			<section>
+				<h4>Exemple d'un pipeline de loaders</h4>
+				<p>Style loader ==> CSS loader ==> PostCSS</p>
+				<pre><code data-trim data-noescape>
+...
+{ 
+  test: /\.html/, 
+  loader: "style!css?sourceMap&modules&importLoaders=1!postcss"
+}
+...
+				</code></pre>
+			</section>
+			<section>
+				<h3>Plugins</h3>
+				<p>
+					Principaux plugins
+					<ul>
+						<li>Minifier le code: <a href="https://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin">UglifyJsPlugin</a></li>
+						<li>Factoriser les dépendances: <a href="https://webpack.github.io/docs/list-of-plugins.html#commonschunkplugin">CommonsChunkPlugin</a></li>
+						<li>Définir de variables: <a href="https://webpack.github.io/docs/list-of-plugins.html#defineplugin">DefinePlugin</a></li>
+						<li>Extraire du texte: <a href="https://github.com/webpack/extract-text-webpack-plugin">ExtractTextPlugin</a></li>
+						<li>Supprimer les fichiers en double: <a href="https://webpack.github.io/docs/list-of-plugins.html#dedupeplugin">DedupePlugin</a></li>
+					</ul>
+				</p>
+			</section>
+			<section>
+				<h3>Serveur de développement</h3>
+				<p>CLI qui génère les fichiers packagés en mémoire</p>
+				<pre><code>
+# Installation
+
+npm install -g webpack-dev-server
+				</code></pre>
+				<p>Recompile aussi les fichiers modifiés</p>
+			</section>
+		</section>
+		<section>
+			<section>
+				<h2>Compilation en Javascript</h2>			
+			</section>
+			<section>
+				<p>Partitionner son code</p>
+				<p>Charger des dépendance externe comme une balise &lt;script&gt;</p>
+				<p>Charger du code à la demande</p>
+				<p>Transpiler son code ES 2015</p>
+				<p>Minifier son code</p>
+			</section>
+		</section>
+		<section>
+			<section>
+				<h2>Compilation en CSS</h2>			
+			</section>
+			<section>
+				<p>Importer son CSS inliné</p>
+				<p>Générer un fichier CSS à part</p>
+				<p>Minifier son CSS</p>
+				<p>Utiliser les <a href="https://github.com/css-modules/css-modules">modules CSS</a></p>
+			</section>
+		</section>
+		<section>
+			<section>
+				<h2>Le hot reloading</h2>
+				<p>C'est quoi ?</p>				
+			</section>
+			<section>
+				<p>Permet de reloader une ressource sans perdre l'état actuel de l'application</p>
+				<p>Fonctionne avec du CSS et <a href="https://facebook.github.io/react/">React</a></p>
+			</section>
+			<section>
+				<h3>Démonstration avec du CSS</h3>
+			</section>
+		</section>
+		<section>
+			<h2>Analyse des dépendances</h2>
+			<p><a href="http://webpack.github.io/analyse">http://webpack.github.io/analyse</a></p>
+			<pre><code>
+# Générer un fichier de statistiques des dépendances
+
+webpack --profile --json > stats.json
+			</code></pre>
+		</section>
+		<section>
+			<h2>Liens</h2>
+			<ul style="font-size:0.7em">
+				<li>Webpack: <a href="http://webpack.github.io/">http://webpack.github.io/</a> </li>
+				<li>Liste des loaders Webpack: <a href="https://webpack.github.io/docs/list-of-loaders.html">https://webpack.github.io/docs/list-of-loaders.html</a></li>
+				<li>Listes des plugins Webpack: <a href="https://webpack.github.io/docs/list-of-plugins.html">https://webpack.github.io/docs/list-of-plugins.html</a></li>
+				<li>Hot reloading dans Webpack: <a href="http://webpack.github.io/docs/hot-module-replacement-with-webpack.html">http://webpack.github.io/docs/hot-module-replacement-with-webpack.html</a></li>
+				<li>Repository de la présentation: <a href="https://github.com/paulmusso/webpack-slides">https://github.com/paulmusso/webpack-slides</a></li>
+				<li>Boilerplate Webpack: <a href="https://github.com/paulmusso/webpack-boilerplate">https://github.com/paulmusso/webpack-boilerplate</a></li>
+				<li>Tutoriel avancé sur Webpack: <a href="https://www.youtube.com/watch?v=MzVFrIAwwS8">https://www.youtube.com/watch?v=MzVFrIAwwS8</a></li>
+				<li>Web app d'analyse: <a href="http://webpack.github.io/analyse">http://webpack.github.io/analyse</a></li>
+			</ul>
+		</section>
+	</div>
+</div>
+<script>
+	// Required, even if empty.
+	Reveal.initialize({
+		history: true,
+		slideNumber: true,
+		dependencies: [
+			{ src: 'highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+		]
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+{
+  "name": "webpack-slides",
+  "version": "1.0.0",
+  "description": "webpack presentation",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --hot --host 0.0.0.0",
+    "build": "NODE_ENV=production webpack --progress --colors -p",
+    "serve": "NODE_ENV=production webpack-dev-server --host 0.0.0.0",
+    "semantic-release": "semantic-release pre  && semantic-release post"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paulmusso/webpack-slides.git"
+  },
+  "keywords": [
+    "webpack",
+    "presentation"
+  ],
+  "author": "Paul Musso",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/paulmusso/webpack-slides/issues"
+  },
+  "homepage": "https://github.com/paulmusso/webpack-slides#readme",
+  "dependencies": {
+    "reveal.js": "^3.2.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.4.5",
+    "babel-loader": "^6.2.1",
+    "babel-preset-es2015": "^6.3.13",
+    "css-loader": "^0.23.1",
+    "cz-conventional-changelog": "^1.1.5",
+    "file-loader": "^0.8.5",
+    "ghooks": "^1.0.3",
+    "html-webpack-plugin": "^2.7.2",
+    "script-loader": "^0.6.1",
+    "style-loader": "^0.13.0",
+    "validate-commit-msg": "^1.1.1",
+    "webpack": "^1.12.12"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    },
+    "ghooks": {
+      "commit-msg": "validate-commit-msg"
+    }
+  }
+}

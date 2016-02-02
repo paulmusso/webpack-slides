@@ -7,12 +7,11 @@ cache:
 before_script:
   - npm prune
 script:
-  - PUBLIC_PATH=/visio-sample npm run build
+  - PUBLIC_PATH=/webpack-slides/ npm run build
 after_success:
   - 'curl -Lo travis_after_all.py https://git.io/travis_after_all'
   - python travis_after_all.py
   - 'export $(cat .to_export_back) &> /dev/null'
-  - npm run semantic-release
   - bash ./deploy-gh-pages.sh
 branches:
   except:
